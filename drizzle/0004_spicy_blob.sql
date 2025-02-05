@@ -1,0 +1,1 @@
+ALTER TABLE "mockInterviewResponse" ALTER COLUMN "mockInterviewId" SET DATA TYPE varchar;

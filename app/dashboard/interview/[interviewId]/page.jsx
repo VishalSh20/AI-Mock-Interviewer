@@ -5,17 +5,18 @@ import { MockInterview } from '@/utils/schema'
 import { eq } from 'drizzle-orm';
 import { Lightbulb, WebcamIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React,{useEffect, useState} from 'react'
 import Webcam from 'react-webcam';
 
 
-function Interview({params}) {
-
+function Interview() {
+  const {interviewId} = useParams();
   const [interviewData, setInterviewData]=useState();
   const [webCamEnabled, setWebCamEnabled]=useState();
  
   useEffect(()=>{
-    console.log(params.interviewId)
+    console.log(interviewId)
     GetInterviewDetails();
   },[])
   /*
@@ -23,7 +24,7 @@ function Interview({params}) {
   */
   const GetInterviewDetails=async()=>{
    const result=await db.select().from(MockInterview) 
-   .where(eq(MockInterview.mockId,params.interviewId))
+   .where(eq(MockInterview.mockId,interviewId))
    
     setInterviewData(result[0]);
   }
@@ -44,8 +45,8 @@ function Interview({params}) {
         </div>
 
         <div className='p-5 border rounded-lg border-yellow-300 bg-yellow-100'>
-            <h2 className='flex gap-2 items-center mt-3 text-yellow-500'> <Lightbulb/><strong>Information</strong> </h2>
-            <h2 className='mt-3 text-yellow-500'>{process.env.NEXT_PUBLIC_INFORMATION}</h2>
+            <p className='flex gap-2 items-center mt-3 text-yellow-500'> <Lightbulb/><strong>Information</strong> </p>
+            <p className='mt-3 text-yellow-500'>Enable Video Web Cam and Microphone to Start your AI Generated Mock Interview, It has 10 question which you can answer and at the last you will get the report on the basis of your answer. NOTE: We never record your video, Web cam access you can disable at any time if you want.</p>
         </div>
 
         </div>
@@ -70,7 +71,7 @@ function Interview({params}) {
         </div>
 
         <div className = 'flex justify-end items-end'>
-        <Link href = {'/dashboard/interview/'+params.interviewId+'/start'}>
+        <Link href = {'/dashboard/interview/'+interviewId+'/start'}>
         <Button>Start</Button>
         </Link>
         </div>

@@ -1,0 +1,1 @@
+ALTER TABLE "mockInterviewResponse" DROP COLUMN IF EXISTS "status";
